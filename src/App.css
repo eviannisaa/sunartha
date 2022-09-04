@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,56 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.container {
+   display: flex;
+   flex-direction: row;
+}
+
+h1 {
+   font-size: 20px;
+   color: white;
+}
+
+.wrapper {
+   padding: 10px 0px 10px 20px;
+}
+
+.sidebar {
+   color: white;
+   background-color: #145da0;
+   width: 25%;
+   height: 100vh;
+   padding: 0px 0px 0px 0px;
+}
+
+.sidebar-menu {
+   background-color: #2e8bc0;
+   color: white;
+   display: flex;
+   flex-direction: row;
+   column-gap: 10px;
+}
+
+.sidebar-menu:hover {
+   background-color: #0c2d48;
+   cursor: pointer;
+}
+
+.logo {
+   display: flex;
+   flex-direction: row;
+   column-gap: 10px;
+   align-items: center;
+   align-self: center;
+
+   background-color: #2e8bc0;
+   padding: 0px 0px 0px 20px;
+}
+
+.layout-content {
+   background-color: #b1d4e0;
+   margin-right: -25%;
+   width: 75%;
 }
