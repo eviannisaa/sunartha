@@ -1,8 +1,9 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import DataGridForWarehouse from "./components/DataWarehouse";
+import DetailWarehouse from "./components/DetailWarehouse";
 import "./App.css";
-import DataGridForWarehouse from "./components/DataGrid";
-import { Link } from "@mui/material";
 
 function App() {
    return (
@@ -13,22 +14,20 @@ function App() {
                <h1>Test</h1>
             </div>
             <div>
-               <div className="wrapper">Test menu</div>
+               <div className="wrapper">Menu</div>
                <div className="sidebar-menu wrapper">
                   <DashboardIcon style={{ color: "white" }} />
-                  <span>Test Shift Warehouse</span>
+                  <span>Warehouse</span>
                </div>
             </div>
          </div>
          <div className="layout-content">
-            {/* <div style={{ display: "flex", height: "100%" }}>
-               <div style={{ flexGrow: 1 }}>
-                  <DataGrid {...data} />
-               </div>
-            </div> */}
-            <DataGridForWarehouse />
-
-            <Link href="https://jsonplaceholder.typicode.com/users">link</Link>
+            <BrowserRouter>
+               <Routes>
+                  <Route path="/" element={<DataGridForWarehouse />} />
+                  <Route path="/:id" element={<DetailWarehouse />} />
+               </Routes>
+            </BrowserRouter>
          </div>
       </div>
    );

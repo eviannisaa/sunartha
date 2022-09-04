@@ -1,64 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import { Link } from "@mui/material";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
+import { Link, Breadcrumbs } from "@mui/material";
 
 function DetailWarehouse() {
+   const params = useParams();
    const [data, setData] = useState([]);
+   const [loading, setLoading] = useState(true);
+   console.log(params.id);
    const getWarehouseData = async () => {
       await axios
-         .get(`https://jsonplaceholder.typicode.com/users`)
+         .get(`https://api.belajartableau.com/api/WarehouseReps/${params.id}`)
          .then((res) => {
             setData(res.data);
+            console.log(res.data);
          });
    };
    useEffect(() => {
       getWarehouseData();
+      setLoading(false);
    }, []);
 
-   // const columns = {
-   //    { field: "ID", headerName: "WarehouseID", width: 90 },
-   //    { field: "city", headerName: "Branch", width: 150 },
-   //    {field: "id", headerName : "WarehouseID", width90},
-   // }
-
-   // const rows = [
-   //    { id: 1, col1: "Hello", col2: "World" },
-   //    { id: 2, col1: "DataGridPro", col2: "is Awesome" },
-   //    { id: 3, col1: "MUI", col2: "is Amazing" },
-   // ];
-
    const columns = [
-      { field: "id", headerName: "Warehouse ID", width: 150 },
-      { field: "name", headerName: "Branch", width: 150 },
-      { field: "username", headerName: "Active", width: 150 },
-      { field: "email", headerName: "Desc", width: 150 },
-      { field: "website", headerName: "Last Sync", width: 150 },
-      { field: "address", headerName: "Last Sync", width: 150 },
+      { field: "id", headerName: "WarehouseID", width: 110 },
+      { field: "branch", headerName: "Branch", width: 110 },
+      { field: "active", headerName: "Active", width: 110 },
+      { field: "description", headerName: "Description", width: 110 },
+      { field: "lastSync", headerName: "LastSync", width: 220 },
+      { field: "lastmodified", headerName: "LastModifiedDateTime", width: 220 },
    ];
 
-   // const rows = data.map((row) => ({
-   //    WarehouseID: row.WarehouseID,
-   //    Branch: row.Branch,
-   //    Active: row.Active,
-   //    Description: row.Description,
-   //    LastSync: row.LastSync,
-   // }));
-
-   const rows = data.map((row) => ({
-      id: row.id,
-      name: row.name,
-      username: row.username,
-      email: row.email,
-      website: row.website,
-   }));
+   const rows = [
+      {
+         id: params.id,
+         branch: data.Branch,
+         active: data.Active,
+         description: data.Description,
+         lastSync: data.LastSync,
+         lastmodified: data.LastModifiedDateTime,
+      },
+   ];
 
    console.log(data);
 
    return (
-      <div>
-         <div style={{ height: "100vh", width: "100%" }}>
-            <DataGrid rows={rows} columns={columns} />
+      <div className="container-data-grid">
+         <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="none" color="primary" href="#">
+               Home
+            </Link>
+            <Link underline="hover" color="primary" href="/">
+               Warehouse
+            </Link>
+            <Link underline="none" color="primary">
+               Detail
+            </Link>
+         </Breadcrumbs>
+
+         <div>
+            {loading === true ? (
+               "loading"
+            ) : (
+               <div className="data-grid">
+                  <DataGrid
+                     rows={rows}
+                     columns={columns}
+                     pageSize={5}
+                     rowsPerPageOptions={[5]}
+                  />
+               </div>
+            )}
          </div>
       </div>
    );
